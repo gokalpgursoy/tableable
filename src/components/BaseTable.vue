@@ -202,7 +202,7 @@ export default {
 }
 
 .sort-btn {
-  width: 80px;
+  width: 55px;
   color: #212529;
   background-color: #f8f9fa;
   border: 1px solid transparent;
