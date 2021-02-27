@@ -89,7 +89,7 @@ export const rows = [
   {
     flightNumber: 'TK3946',
     airline: 'Air Europa',
-    destination: 'Prag-Atina',
+    destination: 'Milano-Paris',
     scheduled: getRandomDate(),
   },
 ];

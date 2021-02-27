@@ -2,9 +2,13 @@ import Vue from 'vue';
 import App from './App.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSort } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSortAlphaDown,
+  faSortAlphaDownAlt,
+} from '@fortawesome/free-solid-svg-icons';
 
-library.add(faSort);
+library.add(faSortAlphaDown);
+library.add(faSortAlphaDownAlt);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
