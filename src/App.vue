@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <BaseTable :columns="columns" :rows="rows" />
+    <div class="table-wrapper">
+      <BaseTable :columns="columns" :rows="rows" />
+    </div>
   </div>
 </template>
 
@@ -22,4 +24,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.table-wrapper {
+  padding: 8px 16px;
+  overflow-x: auto;
+}
+</style>

@@ -1,50 +1,52 @@
 <template>
-  <div class="table-wrapper" v-on="$listeners" v-bind="$attrs">
-    <table>
-      <thead>
-        <tr>
-          <th
-            v-for="(column, index) in sortedColumns"
-            :key="`column-${index}`"
-            :draggable="isDraggingActive && column.draggable"
-            @dragstart="onColumnDragStart($event, index)"
-            @dragover.prevent
-            @dragenter.prevent
-            @drop="onColumnDrop($event, index)"
-          >
-            <div class="table-header">
-              <span
-                :class="isDraggingActive && column.draggable && 'draggable'"
-              >
-                {{ column.label }}
-              </span>
-              <button
-                v-if="isSortingActive && column.sortable"
-                @click="sortDataByColumn(column.field)"
-                @dblclick="removeSortDataFromList(column.field)"
-                type="button"
-                class="sort-btn"
-                :class="getSortInfoByField(column.field) && 'active-btn'"
-              >
-                <span>{{ getSortOrder(column.field) }}</span>
-                <font-awesome-icon :icon="getSortIconByField(column.field)" />
-              </button>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(row, index) in sortedRows" :key="`row-${index}`">
-          <td
-            v-for="(colInRowItem, colInRowIndex) in sortedColumns"
-            :key="`column-in-row-${colInRowIndex}`"
-          >
-            {{ row[colInRowItem.field] }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table v-on="$listeners" v-bind="$attrs" class="table">
+    <thead>
+      <tr>
+        <th
+          v-for="(column, index) in sortedColumns"
+          :key="`column-${index}`"
+          :draggable="isDraggingActive && column.draggable"
+          @dragstart="onColumnDragStart($event, index)"
+          @dragover.prevent
+          @dragenter.prevent
+          @drop="onColumnDrop($event, index)"
+          class="table-cell"
+        >
+          <div class="table-header-cell">
+            <span :class="isDraggingActive && column.draggable && 'draggable'">
+              {{ column.label }}
+            </span>
+            <button
+              v-if="isSortingActive && column.sortable"
+              @click="sortDataByColumn(column.field)"
+              @dblclick="removeSortDataFromList(column.field)"
+              type="button"
+              class="sort-btn"
+              :class="getSortInfoByField(column.field) && 'active-btn'"
+            >
+              <span>{{ getSortOrder(column.field) }}</span>
+              <font-awesome-icon :icon="getSortIconByField(column.field)" />
+            </button>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="(row, index) in sortedRows"
+        :key="`row-${index}`"
+        class="table-row"
+      >
+        <td
+          v-for="(colInRowItem, colInRowIndex) in sortedColumns"
+          :key="`column-in-row-${colInRowIndex}`"
+          class="table-cell"
+        >
+          {{ row[colInRowItem.field] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
@@ -77,7 +79,6 @@ export default {
       sortInformations: [],
     };
   },
-
   watch: {
     sortInformations: {
       handler(value) {
@@ -152,37 +153,31 @@ export default {
 </script>
 
 <style scoped>
-.table-wrapper {
-  padding: 8px 16px;
-  overflow-x: auto;
-}
-
-table {
+.table {
   width: 100%;
   min-width: 480px;
   border-collapse: collapse;
 }
 
-table td,
-table th {
+.table-header-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-cell {
   border: 1px solid #dee2e6;
   padding: 4px;
   text-align: left;
   min-width: 150px;
 }
 
-tbody tr:hover {
+.table-row:hover {
   background-color: #00000013;
 }
 
 .draggable {
   cursor: move;
-}
-
-.table-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .sort-btn {
@@ -192,12 +187,15 @@ tbody tr:hover {
   border-radius: 0.25rem;
   cursor: pointer;
 }
+
 .sort-btn:focus {
   outline: none;
 }
+
 .sort-btn svg {
   margin-left: 10px;
 }
+
 .active-btn {
   background-color: rgb(48, 133, 245);
   color: #f8f9fa;
