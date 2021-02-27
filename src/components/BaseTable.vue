@@ -16,6 +16,7 @@
           >
             <div class="table-header-cell">
               <span
+                class="table-cell-label"
                 :class="isDraggingActive && column.draggable && 'draggable'"
               >
                 {{ column.label }}
@@ -187,6 +188,11 @@ export default {
   min-width: 150px;
 }
 
+.table-cell-label {
+  display: inline-block;
+  width: 100%;
+}
+
 .table-row:hover {
   background-color: #00000013;
 }
@@ -196,6 +202,7 @@ export default {
 }
 
 .sort-btn {
+  width: 80px;
   color: #212529;
   background-color: #f8f9fa;
   border: 1px solid transparent;
