@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div class="table-wrapper">
-      <BaseTable :columns="columns" :rows="rows" />
-    </div>
+    <BaseTable :columns="columns" :rows="rows" :loading="loading" />
   </div>
 </template>
 
@@ -19,14 +17,16 @@ export default {
     return {
       columns,
       rows,
+      loading: false,
     };
+  },
+  beforeMount() {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
   },
 };
 </script>
 
-<style scoped>
-.table-wrapper {
-  padding: 8px 16px;
-  overflow-x: auto;
-}
-</style>
+<style scoped></style>

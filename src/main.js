@@ -6,6 +6,7 @@ import {
   faSortAlphaDown,
   faSortAlphaDownAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import './app.css';
 
 library.add(faSortAlphaDown);
 library.add(faSortAlphaDownAlt);

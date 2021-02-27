@@ -1,52 +1,57 @@
 <template>
-  <table v-on="$listeners" v-bind="$attrs" class="table">
-    <thead>
-      <tr>
-        <th
-          v-for="(column, index) in sortedColumns"
-          :key="`column-${index}`"
-          :draggable="isDraggingActive && column.draggable"
-          @dragstart="onColumnDragStart($event, index)"
-          @dragover.prevent
-          @dragenter.prevent
-          @drop="onColumnDrop($event, index)"
-          class="table-cell"
+  <div v-on="$listeners" v-bind="$attrs" class="table-wrapper">
+    <div v-if="loading" class="app-loading"></div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th
+            v-for="(column, index) in sortedColumns"
+            :key="`column-${index}`"
+            :draggable="isDraggingActive && column.draggable"
+            @dragstart="onColumnDragStart($event, index)"
+            @dragover.prevent
+            @dragenter.prevent
+            @drop="onColumnDrop($event, index)"
+            class="table-cell"
+          >
+            <div class="table-header-cell">
+              <span
+                :class="isDraggingActive && column.draggable && 'draggable'"
+              >
+                {{ column.label }}
+              </span>
+              <button
+                v-if="isSortingActive && column.sortable"
+                @click="sortDataByColumn(column.field)"
+                @dblclick="removeSortDataFromList(column.field)"
+                type="button"
+                class="sort-btn"
+                :class="getSortInfoByField(column.field) && 'active-btn'"
+              >
+                <span>{{ getSortOrder(column.field) }}</span>
+                <font-awesome-icon :icon="getSortIconByField(column.field)" />
+              </button>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(row, index) in sortedRows"
+          :key="`row-${index}`"
+          class="table-row"
         >
-          <div class="table-header-cell">
-            <span :class="isDraggingActive && column.draggable && 'draggable'">
-              {{ column.label }}
-            </span>
-            <button
-              v-if="isSortingActive && column.sortable"
-              @click="sortDataByColumn(column.field)"
-              @dblclick="removeSortDataFromList(column.field)"
-              type="button"
-              class="sort-btn"
-              :class="getSortInfoByField(column.field) && 'active-btn'"
-            >
-              <span>{{ getSortOrder(column.field) }}</span>
-              <font-awesome-icon :icon="getSortIconByField(column.field)" />
-            </button>
-          </div>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="(row, index) in sortedRows"
-        :key="`row-${index}`"
-        class="table-row"
-      >
-        <td
-          v-for="(colInRowItem, colInRowIndex) in sortedColumns"
-          :key="`column-in-row-${colInRowIndex}`"
-          class="table-cell"
-        >
-          {{ row[colInRowItem.field] }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <td
+            v-for="(colInRowItem, colInRowIndex) in sortedColumns"
+            :key="`column-in-row-${colInRowIndex}`"
+            class="table-cell"
+          >
+            {{ row[colInRowItem.field] }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -70,6 +75,10 @@ export default {
     isDraggingActive: {
       type: Boolean,
       default: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -153,6 +162,12 @@ export default {
 </script>
 
 <style scoped>
+.table-wrapper {
+  padding: 8px 16px;
+  overflow-x: auto;
+  position: relative;
+}
+
 .table {
   width: 100%;
   min-width: 480px;
