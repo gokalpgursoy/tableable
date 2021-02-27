@@ -82,7 +82,6 @@ export default {
         if (value?.length) {
           const fields = this.sortInformations.map((item) => item.field);
           const orders = this.sortInformations.map((item) => item.orderBy);
-          console.log(fields, orders);
           this.sortedRows = orderBy(this.sortedRows, fields, orders);
         }
       },
