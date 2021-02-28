@@ -98,5 +98,5 @@ function getRandomDate() {
   const date = new Date();
   const randomDay = Math.random() * 100;
   date.setDate(new Date().getDate() + randomDay);
-  return new Date(date).toDateString();
+  return new Date(date).toLocaleDateString();
 }
