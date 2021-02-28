@@ -1,7 +1,7 @@
 <template>
   <div v-on="$listeners" v-bind="$attrs" class="table-wrapper">
     <div v-if="loading" class="app-loading"></div>
-    <table class="table">
+    <table class="table" :style="tableStyle">
       <thead>
         <tr>
           <th
@@ -64,22 +64,32 @@ export default {
     columns: {
       type: Array,
       default: () => [],
+      required: true,
     },
     rows: {
       type: Array,
       default: () => [],
+      required: true,
+    },
+    tableStyle: {
+      type: Object,
+      default: () => ({}),
+      required: false,
     },
     isSortingActive: {
       type: Boolean,
       default: true,
+      required: false,
     },
     isDraggingActive: {
       type: Boolean,
       default: true,
+      required: false,
     },
     loading: {
       type: Boolean,
       default: false,
+      required: false,
     },
   },
   data() {
